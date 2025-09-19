@@ -7,26 +7,25 @@ This backend exposes a single endpoint for querying domain data, designed to be 
 
 ## 📂 Folder Structure
 
+````bash
 backend/
 ├── src/
-│ ├── app.ts # Express app setup
-│ ├── server.ts # Server entry point
-│ ├── routes/
-│ │ └── whoisRoutes.ts
-│ ├── controllers/
-│ │ └── whoisController.ts
-│ ├── config/
-│ │ └── env.ts
-│ ├── types/
-│ │ └── whoisTypes.ts
+│   ├── app.ts                 # Express app setup
+│   ├── server.ts              # Server entry point
+│   ├── routes/
+│   │   └── whoisRoutes.ts     # API routes
+│   ├── controllers/
+│   │   └── whoisController.ts # Controller logic
+│   ├── config/
+│   │   └── env.ts             # Environment variables
+│   ├── types/
+│   │   └── whoisTypes.ts      # TypeScript types
 ├── .env
 ├── nodemon.json
 ├── tsconfig.json
 ├── package.json
 └── README.md
 
-yaml
-Copy code
 
 ---
 
@@ -157,4 +156,4 @@ Make sure your .env file is never committed to GitHub.
 Restart the server after updating .env.
 
 The backend runs on http://localhost:5000 by default.
-```
+````
