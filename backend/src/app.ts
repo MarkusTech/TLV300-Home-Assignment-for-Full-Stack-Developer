@@ -10,7 +10,6 @@ const app = express();
 
 // middlewares
 app.use(helmet());
-app.use(cors());
 app.use(compression());
 app.use(express.json());
 app.use(morgan("dev"));
@@ -19,6 +18,14 @@ const limiter = rateLimit({
   max: 100, // limit each IP to 100 requests per window
   message: { error: "Too many requests, please try again later." },
 });
+const corsOptions = {
+  origin: ["http://localhost:5173"],
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(limiter);
 
 // API Routes
