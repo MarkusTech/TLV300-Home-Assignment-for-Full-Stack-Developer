@@ -48,15 +48,21 @@ export const getWhoisData = async (req: Request, res: Response) => {
           : "N/A",
       };
     } else if (type === "contact") {
-      const registrant = registryData.registrant || {};
-      const technical = registryData.technicalContact || {};
-      const admin = registryData.administrativeContact || {};
+      // Try multiple possible locations for contact info
+      const registrant =
+        registryData.registrant || registryData.contacts?.registrant || {};
+      const technical =
+        registryData.technicalContact || registryData.contacts?.technical || {};
+      const admin =
+        registryData.administrativeContact ||
+        registryData.contacts?.administrative ||
+        {};
 
       result = {
-        "Registrant Name": registrant.name || "N/A",
-        "Technical Contact Name": technical.name || "N/A",
-        "Administrative Contact Name": admin.name || "N/A",
-        "Contact Email": registrant.email || "N/A",
+        "Registrant Name": registrant.name || "Contact info hidden",
+        "Technical Contact Name": technical.name || "Contact info hidden",
+        "Administrative Contact Name": admin.name || "Contact info hidden",
+        "Contact Email": registrant.email || "Contact info hidden",
       };
     } else {
       return res
