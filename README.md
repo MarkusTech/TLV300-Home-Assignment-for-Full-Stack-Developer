@@ -120,3 +120,33 @@ npm run dev
 
 4. Click Lookup.
 5. Results appear in a formatted table.
+
+# Example API Request (Backend)
+
+# POST http://localhost:5000/api/whois
+
+```bash
+{
+  "domain": "amazon.com",
+  "type": "domain"
+}
+```
+
+# Response (Domain Info Example)
+
+```bash
+{
+  "domainName": "amazon.com",
+  "registrar": "MarkMonitor Inc.",
+  "registrationDate": "1994-11-01",
+  "expirationDate": "2028-11-01",
+  "estimatedDomainAge": "30 years",
+  "hostnames": "ns1.p31.dynect.net, ns2.p31.dynect.net..."
+}
+```
+
+# Notes
+
+- API key must be obtained from WhoisXML API.
+- Hostnames field is truncated at 25 characters as per assignment requirements.
+- Errors (invalid domain, missing key, request failure) are displayed clearly on the frontend.
