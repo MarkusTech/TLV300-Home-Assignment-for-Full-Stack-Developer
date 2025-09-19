@@ -81,9 +81,13 @@ cd backend
 npm install
 ```
 
-# Create a .env file in backend/ with:
+# Create a .env file by copying the example file:
 
 ```bash
+cp .env.example .env
+
+OR
+
 PORT=5000
 WHOIS_API_KEY=your_api_key_here
 WHOIS_BASE_URL=https://whoisxmlapi.com/whoisserver/WhoisService
