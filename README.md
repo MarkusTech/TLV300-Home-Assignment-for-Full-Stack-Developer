@@ -69,5 +69,7 @@ frontend/
 
 # 1. Clone the repository
 
+```bash
 git clone https://github.com/MarkusTech/TLV300-Home-Assignment-for-Full-Stack-Developer.git
 cd TLV300-Home-Assignment-for-Full-Stack-Developer
+```
