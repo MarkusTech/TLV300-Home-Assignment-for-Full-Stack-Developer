@@ -95,3 +95,28 @@ WHOIS_BASE_URL=https://whoisxmlapi.com/whoisserver/WhoisService
 ```bash
 npm run dev
 ```
+
+# 3. Frontend Setup
+
+```bash
+cd frontend
+npm install
+```
+
+# Run frontend in dev mode:
+
+```bash
+npm run dev
+```
+
+# Usage
+
+1. Open the frontend at http://localhost:5173.
+2. Enter a domain (e.g., amazon.com).
+3. Choose data type:
+
+- Domain Information → registrar, registration date, expiration date, domain age, hostnames.
+- Contact Information → registrant, technical, admin, contact email.
+
+4. Click Lookup.
+5. Results appear in a formatted table.
