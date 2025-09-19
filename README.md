@@ -26,3 +26,41 @@ One main endpoint /api/whois that:
 - Results displayed in a styled table format.
   Graceful error handling for failed lookups.
   Styled with TailwindCSS (or your chosen styling).
+
+# Project Structure
+
+# Backend
+
+```bash
+backend/
+├── src/
+│ ├── app.ts # Express app setup
+│ ├── server.ts # Server entry point
+│ ├── routes/
+│ │ └── whoisRoutes.ts
+│ ├── controllers/
+│ │ └── whoisController.ts
+│ ├── types/
+│ │ └── whoisTypes.ts # (optional) type definitions
+│ └── config/
+│ └── env.ts
+├── .env
+├── tsconfig.json
+├── package.json
+
+```
+
+# Frontend
+
+```bash
+frontend/
+├── src/
+│   ├── components/         # React components
+│   ├── pages/              # Page views
+│   ├── App.tsx             # Main entry
+│   └── main.tsx            # ReactDOM render
+├── index.html
+├── vite.config.ts
+├── package.json
+
+```
