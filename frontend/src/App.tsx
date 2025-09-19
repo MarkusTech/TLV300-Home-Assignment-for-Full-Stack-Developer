@@ -20,7 +20,7 @@ function App() {
       });
       setResult(res.data);
     } catch {
-      setError("❌ Failed to fetch WHOIS data. Please try again.");
+      setError("Failed to fetch WHOIS data. Please try again.");
     } finally {
       setLoading(false);
     }
