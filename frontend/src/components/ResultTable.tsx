@@ -1,3 +1,5 @@
+import React from "react";
+
 interface ResultTableProps {
   data: Record<string, string>;
   title: string;
@@ -7,30 +9,28 @@ const ResultTable: React.FC<ResultTableProps> = ({ data, title }) => {
   if (!data || Object.keys(data).length === 0) return null;
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 w-full max-w-5xl mx-auto mt-6">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100 text-center">
+    <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 w-full max-w-6xl mx-auto mt-10">
+      <h2 className="text-3xl font-semibold mb-8 text-gray-900 dark:text-gray-100 text-center">
         {title}
       </h2>
-      <div className="overflow-x-auto">
-        <table className="table-auto w-full border-collapse border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
-          <tbody>
-            {Object.entries(data).map(([key, value]) => (
-              <tr
-                key={key}
-                className="border-t border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                {/* Left column (label) */}
-                <td className="px-6 py-3 font-medium text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600 w-1/3">
-                  {formatKey(key)}
-                </td>
-                {/* Right column (value) */}
-                <td className="px-6 py-3 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 break-words">
-                  {value || "—"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+      {/* Card Grid */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {Object.entries(data).map(([key, value]) => (
+          <div
+            key={key}
+            className="bg-gray-50 dark:bg-gray-700 rounded-xl shadow-md p-5 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-shadow"
+          >
+            {/* Key */}
+            <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2 uppercase tracking-wide">
+              {formatKey(key)}
+            </p>
+            {/* Value */}
+            <p className="text-lg font-semibold text-gray-900 dark:text-gray-100 break-words">
+              {value || "—"}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
