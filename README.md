@@ -89,17 +89,17 @@ cp .env.example .env
 
 # Then open .env and add your own Whois API key:
 
-````bash
+```bash
 PORT=5000
 WHOIS_API_KEY=your_api_key_here
 WHOIS_BASE_URL=https://whoisxmlapi.com/whoisserver/WhoisService
-
+```
 
 # Run backend in dev mode:
 
 ```bash
 npm run dev
-````
+```
 
 # 3. Frontend Setup
 
