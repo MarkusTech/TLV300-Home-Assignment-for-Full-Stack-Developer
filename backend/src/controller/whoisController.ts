@@ -2,8 +2,6 @@ import { Request, Response } from "express";
 import axios from "axios";
 import { CONFIG } from "../config/env";
 
-const WHOIS_URL = "https://www.whoisxmlapi.com/whoisserver/WhoisService";
-
 /**
  * Helper: format hostnames into comma-separated and truncate if > 25 chars
  */
@@ -20,7 +18,7 @@ export const getWhoisData = async (req: Request, res: Response) => {
   }
 
   try {
-    const response = await axios.get(WHOIS_URL, {
+    const response = await axios.get(CONFIG.WHOIS_BASE_URL, {
       params: {
         apiKey: CONFIG.WHOIS_API_KEY,
         domainName: domain,
@@ -43,7 +41,8 @@ export const getWhoisData = async (req: Request, res: Response) => {
         Registrar: registryData.registrarName || "N/A",
         "Registration Date": registryData.createdDate || "N/A",
         "Expiration Date": registryData.expiresDate || "N/A",
-        "Estimated Domain Age": registryData.estimatedDomainAge?.toString() || "N/A",
+        "Estimated Domain Age":
+          registryData.estimatedDomainAge?.toString() || "N/A",
         Hostnames: registryData.nameServers?.hostNames
           ? formatHostnames(registryData.nameServers.hostNames)
           : "N/A",
@@ -60,7 +59,9 @@ export const getWhoisData = async (req: Request, res: Response) => {
         "Contact Email": registrant.email || "N/A",
       };
     } else {
-      return res.status(400).json({ error: "Invalid type. Use 'domain' or 'contact'." });
+      return res
+        .status(400)
+        .json({ error: "Invalid type. Use 'domain' or 'contact'." });
     }
 
     return res.json(result);
