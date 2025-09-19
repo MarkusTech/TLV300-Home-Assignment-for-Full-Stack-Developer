@@ -41,7 +41,7 @@ backend/
 │ ├── controllers/
 │ │ └── whoisController.ts
 │ ├── types/
-│ │ └── whoisTypes.ts # (optional) type definitions
+│ │ └── whoisTypes.ts
 │ └── config/
 │ └── env.ts
 ├── .env
