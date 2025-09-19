@@ -1,35 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import axios from "axios";
+import DomainForm from "./components/DomainForm";
+import ResultTable from "./components/ResultTable";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [result, setResult] = useState<Record<string, string> | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleLookup = async (domain: string, type: "domain" | "contact") => {
+    setError(null);
+    setResult(null);
+    setLoading(true);
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/whois", {
+        domain,
+        type,
+      });
+      setResult(res.data);
+    } catch {
+      setError("❌ Failed to fetch WHOIS data. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen w-full bg-gray-100 dark:bg-gray-900 text-black dark:text-white flex items-center justify-center">
+      {/* Full screen container */}
+      <div className="w-full flex flex-col items-center px-6">
+        {/* Title */}
+        <h1 className="text-4xl font-bold mb-10 text-center">
+          WHOIS Lookup Tool
+        </h1>
+
+        {/* WHOIS Form */}
+        <div className="w-full max-w-lg">
+          <DomainForm onSubmit={handleLookup} />
+        </div>
+
+        {/* Loader / Error / Result */}
+        {loading && (
+          <p className="mt-6 text-blue-600 font-medium dark:text-blue-400 text-center">
+            Fetching WHOIS data...
+          </p>
+        )}
+
+        {error && (
+          <p className="mt-6 text-red-600 font-medium bg-red-100 dark:bg-red-800 dark:text-red-200 p-3 rounded text-center w-full max-w-2xl">
+            {error}
+          </p>
+        )}
+
+        {result && (
+          <div className="mt-8 w-full max-w-4xl">
+            <ResultTable data={result} title="WHOIS Lookup Result" />
+          </div>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
