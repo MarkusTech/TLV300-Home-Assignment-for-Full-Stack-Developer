@@ -64,3 +64,10 @@ frontend/
 ├── package.json
 
 ```
+
+# Setup & Installation
+
+# 1. Clone the repository
+
+git clone https://github.com/MarkusTech/TLV300-Home-Assignment-for-Full-Stack-Developer.git
+cd TLV300-Home-Assignment-for-Full-Stack-Developer
