@@ -73,3 +73,25 @@ frontend/
 git clone https://github.com/MarkusTech/TLV300-Home-Assignment-for-Full-Stack-Developer.git
 cd TLV300-Home-Assignment-for-Full-Stack-Developer
 ```
+
+# 2. Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+# Create a .env file in backend/ with:
+
+```bash
+PORT=5000
+WHOIS_API_KEY=your_api_key_here
+WHOIS_BASE_URL=https://whoisxmlapi.com/whoisserver/WhoisService
+
+```
+
+# Run backend in dev mode:
+
+```bash
+npm run dev
+```
