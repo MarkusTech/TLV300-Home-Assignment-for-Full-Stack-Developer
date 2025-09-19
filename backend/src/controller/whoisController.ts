@@ -4,6 +4,14 @@ import { CONFIG } from "../config/env";
 
 const WHOIS_URL = "https://www.whoisxmlapi.com/whoisserver/WhoisService";
 
+/**
+ * Helper: format hostnames into comma-separated and truncate if > 25 chars
+ */
+function formatHostnames(hostnames: string[] = []): string {
+  const joined = hostnames.join(", ");
+  return joined.length > 25 ? joined.slice(0, 25) + "..." : joined;
+}
+
 export const getWhoisData = async (req: Request, res: Response) => {
   const { domain, type } = req.body;
 
@@ -20,27 +28,39 @@ export const getWhoisData = async (req: Request, res: Response) => {
       },
     });
 
-    const whoisData = response.data?.WhoisRecord?.registryData || {};
+    const whoisRecord = response.data?.WhoisRecord;
+    const registryData = whoisRecord?.registryData || {};
+
+    if (!whoisRecord) {
+      return res.status(404).json({ error: "No WHOIS data found" });
+    }
+
     let result: Record<string, string> = {};
 
     if (type === "domain") {
-      const hostnames = (whoisData.nameServers?.hostNames || []).join(", ");
       result = {
-        domainName: domain,
-        registrar: whoisData.registrarName || "N/A",
-        registrationDate: whoisData.createdDate || "N/A",
-        expirationDate: whoisData.expiresDate || "N/A",
-        estimatedDomainAge: whoisData.estimatedDomainAge?.toString() || "N/A",
-        hostnames:
-          hostnames.length > 25 ? hostnames.slice(0, 25) + "..." : hostnames,
+        "Domain Name": registryData.domainName || domain,
+        Registrar: registryData.registrarName || "N/A",
+        "Registration Date": registryData.createdDate || "N/A",
+        "Expiration Date": registryData.expiresDate || "N/A",
+        "Estimated Domain Age": registryData.estimatedDomainAge?.toString() || "N/A",
+        Hostnames: registryData.nameServers?.hostNames
+          ? formatHostnames(registryData.nameServers.hostNames)
+          : "N/A",
       };
     } else if (type === "contact") {
+      const registrant = registryData.registrant || {};
+      const technical = registryData.technicalContact || {};
+      const admin = registryData.administrativeContact || {};
+
       result = {
-        registrantName: whoisData.registrant?.name || "N/A",
-        technicalContactName: whoisData.technicalContact?.name || "N/A",
-        adminContactName: whoisData.administrativeContact?.name || "N/A",
-        contactEmail: whoisData.registrant?.email || "N/A",
+        "Registrant Name": registrant.name || "N/A",
+        "Technical Contact Name": technical.name || "N/A",
+        "Administrative Contact Name": admin.name || "N/A",
+        "Contact Email": registrant.email || "N/A",
       };
+    } else {
+      return res.status(400).json({ error: "Invalid type. Use 'domain' or 'contact'." });
     }
 
     return res.json(result);
